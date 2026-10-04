@@ -6,6 +6,7 @@ import Button from "primevue/button";
 import { useWorkspace } from "../../../shared/application/workspace.store.js";
 import StatusTag from "../../../shared/presentation/components/status-tag.vue";
 import StatePanel from "../../../shared/presentation/components/state-panel.vue";
+import Timeline from "../../../care-coordination/presentation/components/timeline.vue";
 import { useFormat } from "../../../shared/presentation/format.js";
 const route = useRoute(),
   { t } = useI18n(),
@@ -102,6 +103,11 @@ watch(
                 date(a.raisedAt)
               }}</time>
             </div>
+            <Timeline
+              :items="store.interventions"
+              :alert-id="a.id"
+              professional
+            />
           </article>
         </div>
         <aside>
