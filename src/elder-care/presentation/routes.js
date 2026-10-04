@@ -21,7 +21,10 @@ export const routes = [
     },
     {
         path: "/professional/patients/:id/history",
-        component: () => import("../../shared/presentation/views/stage.vue"),
+        component: () =>
+            import(
+                "../../preventive-monitoring/presentation/views/history.vue"
+            ),
         meta: { role: "professional", title: "healthHistory" },
     },
     {
