@@ -1,0 +1,4 @@
+/* Feature styles are intentionally minimal in the foundation increment.
+   Feature-specific styles will be added alongside each future module. */
+.foundation-grid .panel { transition: border-color .15s ease, transform .15s ease; }
+.foundation-grid .panel:hover { border-color: #b8d1bd; transform: translateY(-1px); }
