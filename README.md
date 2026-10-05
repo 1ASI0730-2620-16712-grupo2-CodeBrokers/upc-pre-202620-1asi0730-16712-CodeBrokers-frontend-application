@@ -1,67 +1,70 @@
-# VitaLink — Frontend Foundation
+# VitaLink — Frontend del Sprint 2
 
-Primera entrega incremental del frontend de VitaLink.
-
-## Objetivo
-
-Este paquete contiene únicamente la base funcional de la aplicación: Vue 3, Vite, PrimeVue, Pinia, Vue Router, Vue I18n, navegación por roles, layout responsive y estilos base.
-
-Las funcionalidades de negocio se incorporarán en incrementos posteriores para mantener cambios pequeños y trazables.
+Aplicación académica desarrollada con Vue 3, JavaScript, PrimeVue Material, Pinia, Vue Router, Vue I18n, Axios y JSON Server. La información se obtiene desde un servicio REST local.
 
 ## Requisitos
 
-- Node.js `>=22.12.0`
-- npm
+- Node.js 22.12 o superior.
+- npm.
+- Dos terminales: una para JSON Server y otra para Vite.
 
-## Ejecutar
+## Instalación
 
-```bash
+```sh
 npm install
+```
+
+## Ejecución
+
+Primera terminal, desde la raíz del proyecto, para iniciar la aplicación Vue:
+
+```sh
 npm run dev
 ```
 
-La aplicación queda disponible en `http://127.0.0.1:5173`.
+Segunda terminal, desde la raíz del proyecto, para iniciar la API REST local:
 
-## Validar build
+```sh
+cd server
+sh start.sh
+```
 
-```bash
+La API queda disponible en `http://localhost:3000`.
+
+Si el puerto 5173 está ocupado:
+
+```sh
+npm run dev -- --port 5174
+```
+
+La dirección de la API se configura en `.env.development` y `.env.production`. Las rutas visibles usan hash history para funcionar en hosting estático.
+
+## Compilación
+
+```sh
 npm run build
+npm run preview
 ```
 
-## API local
+## Alcance del Sprint 2
 
-El servidor mock se conserva como infraestructura para futuros incrementos:
+TS-02, US-07, US-08, US-09, US-10, US-13, US-21, US-23, US-28, US-33 y TS-05.
 
-```bash
-npm run server
-```
+Incluye panel profesional, alertas, pacientes asignados, detalle, historial, responsables, panel familiar, seguimiento de casos, preferencias, inglés y español, diseño responsive y la ruta inicial del adulto mayor.
 
-## Arquitectura de esta entrega
+## Servidor local
 
-```text
-src/
-├── elder-care/
-│   └── presentation/routes.js
-├── locales/
-├── shared/
-│   └── presentation/
-│       ├── components/
-│       └── views/
-├── app.vue
-├── feature-styles.css
-├── i18n.js
-├── main.js
-├── router.js
-└── style.css
-```
+`server/db.json` contiene los recursos `patients`, `alerts`, `records` e `interventions`. `server/routes.json` expone los recursos bajo `/api/v1`. La aplicación los consume por HTTP mediante Axios.
 
-## Orden incremental sugerido
+Los estados vacíos y de error se presentan desde las vistas correspondientes cuando el servicio no entrega información utilizable.
 
-1. Foundation: estructura, navegación, idioma y layout.
-2. Autenticación: inicio de sesión y selección de tipo de usuario.
-3. Funcionalidad profesional.
-4. Funcionalidad familiar/cuidador.
-5. Funcionalidad del adulto mayor.
-6. Alertas, coordinación, monitoreo y datos reales.
+## Límites
 
-Cada incremento debe mantener la aplicación ejecutable y agregar una capacidad concreta.
+- La selección de rol no es autenticación.
+- JSON Server funciona como servicio REST local y no implementa autorización.
+- No hay diagnósticos, monitoreo en vivo, mensajería, registro clínico real ni envío de notificaciones.
+- Las preferencias se guardan en el navegador.
+- No se realizó despliegue público.
+- No se ejecutaron comandos Git ni se modificó el informe.
+
+Consulta `CHANGELOG.md` para el historial y `docs/SPRINT-2-COVERAGE.md` para la cobertura funcional.
