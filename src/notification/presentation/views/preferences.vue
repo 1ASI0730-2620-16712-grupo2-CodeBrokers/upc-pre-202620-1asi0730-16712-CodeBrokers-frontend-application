@@ -3,6 +3,7 @@ import { ref, watch, toRaw } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import Button from "primevue/button";
+import { normalizeLocale } from "../../../shared/domain/locale.js";
 import {
   loadPreferences,
   savePreferences,
@@ -31,9 +32,9 @@ watch(
  * @param {string} value - Locale identifier.
  */
 function changeLanguage(value) {
-  locale.value = value;
+  locale.value = normalizeLocale(value);
   try {
-    localStorage.setItem("vitalink.locale", value);
+    localStorage.setItem("vitalink.locale", locale.value);
     error.value = "";
     feedback.value = "languageSaved";
   } catch {
@@ -83,8 +84,8 @@ async function save() {
       :value="locale"
       @change="changeLanguage($event.target.value)"
     >
-      <option value="en">English</option>
-      <option value="es">Español</option>
+      <option value="en_US">English</option>
+      <option value="es_419">Español latinoamericano</option>
     </select>
   </section>
   <form class="panel settings-section" @submit.prevent="save">

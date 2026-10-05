@@ -1,6 +1,7 @@
 <script setup>
 import { useI18n } from "vue-i18n";
 import { ref } from "vue";
+import { normalizeLocale } from "../../domain/locale.js";
 const { t, locale } = useI18n();
 const error = ref(false);
 
@@ -10,7 +11,7 @@ const error = ref(false);
  * @param {Event} event - Language selection event.
  */
 function set(event) {
-  locale.value = event.target.value;
+  locale.value = normalizeLocale(event.target.value);
   try {
     localStorage.setItem("vitalink.locale", locale.value);
     error.value = false;
@@ -22,9 +23,16 @@ function set(event) {
 <template>
   <div class="language-picker">
     <label class="sr-only" for="header-language">{{ t("language") }}</label
-    ><select id="header-language" :value="locale" @change="set">
-      <option value="en">EN</option>
-      <option value="es">ES</option></select
-    ><span v-if="error" role="alert">{{ t("storageError") }}</span>
+    ><select
+      id="header-language"
+      :value="locale"
+      :aria-describedby="error ? 'header-language-error' : undefined"
+      @change="set"
+    >
+      <option value="en_US">EN</option>
+      <option value="es_419">ES</option></select
+    ><span v-if="error" id="header-language-error" role="alert">{{
+      t("storageError")
+    }}</span>
   </div>
 </template>

@@ -1,4 +1,5 @@
 import { useI18n } from "vue-i18n";
+import { toLanguageTag } from "../domain/locale.js";
 
 /**
  * Provides localized presentation formatters.
@@ -11,7 +12,7 @@ export function useFormat() {
         date: (value) =>
             value
                 ? new Intl.DateTimeFormat(
-                      locale.value === "es" ? "es-PE" : "en-US",
+                      toLanguageTag(locale.value),
                       {
                           dateStyle: "medium",
                           timeStyle: "short",

@@ -15,7 +15,7 @@ watch(
 </script>
 <template>
   <header class="topbar">
-    <RouterLink to="/" aria-label="VitaLink"><Brand /></RouterLink>
+    <RouterLink to="/"><Brand /></RouterLink>
     <div class="header-actions">
       <LanguagePicker /><RouterLink to="/" class="text-link">{{
         t("switchRole")

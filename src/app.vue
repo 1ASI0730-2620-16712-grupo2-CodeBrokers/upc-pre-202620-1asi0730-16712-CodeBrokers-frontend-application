@@ -1,14 +1,20 @@
 <script setup>
-import { nextTick, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { toLanguageTag } from "./shared/domain/locale.js";
 const route = useRoute();
 const { t, locale } = useI18n();
+const announcement = ref("");
 watch(
   [() => route.meta.title, locale],
-  () => {
-    document.title = `${t(route.meta.title || "brand")} · VitaLink`;
-    document.documentElement.lang = locale.value === "es" ? "es" : "en";
+  async () => {
+    const title = t(route.meta.title || "brand");
+    document.title = `${title} · VitaLink`;
+    document.documentElement.lang = toLanguageTag(locale.value);
+    announcement.value = "";
+    await nextTick();
+    announcement.value = title;
   },
   { immediate: true },
 );
@@ -28,5 +34,8 @@ watch(
       $event.currentTarget.ownerDocument.getElementById('main')?.focus()
     "
     >{{ t("skip") }}</a
-  ><RouterView />
+  ><p class="sr-only" aria-live="polite" aria-atomic="true">
+    {{ announcement }}
+  </p>
+  <RouterView />
 </template>
