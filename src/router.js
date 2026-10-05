@@ -27,7 +27,9 @@ export const router = createRouter({
                 ...["professional", "family", "older-adult"].map((role) => ({
                     path: "/" + role + "/preferences",
                     component: () =>
-                        import("./shared/presentation/views/stage.vue"),
+                        import(
+                            "./notification/presentation/views/preferences.vue"
+                            ),
                     meta: { role, title: "preferences" },
                 })),
             ],

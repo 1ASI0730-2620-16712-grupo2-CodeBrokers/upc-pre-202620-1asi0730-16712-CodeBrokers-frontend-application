@@ -6,11 +6,11 @@ import { useRoute } from "vue-router";
 import { ref, watch } from "vue";
 import Button from "primevue/button";
 const { t } = useI18n(),
-  route = useRoute(),
-  menu = ref(false);
+    route = useRoute(),
+    menu = ref(false);
 watch(
-  () => route.path,
-  () => (menu.value = false),
+    () => route.path,
+    () => (menu.value = false),
 );
 </script>
 <template>
@@ -20,7 +20,7 @@ watch(
       <LanguagePicker /><RouterLink to="/" class="text-link">{{
         t("switchRole")
       }}</RouterLink
-      ><Button
+    ><Button
         class="mobile-menu"
         icon="pi pi-bars"
         :aria-label="t('toggleMenu')"
@@ -29,7 +29,7 @@ watch(
         outlined
         severity="secondary"
         @click="menu = !menu"
-      />
+    />
     </div>
   </header>
   <div class="app-layout">
@@ -37,20 +37,20 @@ watch(
       <p class="eyebrow">{{ t("workspace") }}</p>
       <nav id="main-navigation" :aria-label="t('navigation')">
         <RouterLink :to="'/' + route.meta.role"
-          ><i class="pi pi-th-large" aria-hidden="true" />{{
+        ><i class="pi pi-th-large" aria-hidden="true" />{{
             t("overview")
           }}</RouterLink
         ><RouterLink
           v-if="route.meta.role === 'professional'"
           to="/professional/patients"
-          ><i class="pi pi-users" aria-hidden="true" />{{
-            t("assignedPatients")
-          }}</RouterLink
-        ><RouterLink :to="'/' + route.meta.role + '/preferences'"
-          ><i class="pi pi-sliders-h" aria-hidden="true" />{{
-            t("preferences")
-          }}</RouterLink
-        >
+      ><i class="pi pi-users" aria-hidden="true" />{{
+          t("assignedPatients")
+        }}</RouterLink
+      ><RouterLink :to="'/' + route.meta.role + '/preferences'"
+      ><i class="pi pi-sliders-h" aria-hidden="true" />{{
+          t("preferences")
+        }}</RouterLink
+      >
       </nav>
     </aside>
     <main id="main" tabindex="-1" class="content">
