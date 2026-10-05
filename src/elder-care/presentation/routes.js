@@ -11,7 +11,7 @@ export const routes = [
     },
     {
         path: "/professional/patients",
-        component: () => import("../../shared/presentation/views/stage.vue"),
+        component: () => import("./views/patients.vue"),
         meta: { role: "professional", title: "assignedPatients" },
     },
     {
@@ -24,7 +24,7 @@ export const routes = [
         component: () =>
             import(
                 "../../preventive-monitoring/presentation/views/history.vue"
-            ),
+                ),
         meta: { role: "professional", title: "healthHistory" },
     },
     {
@@ -35,7 +35,10 @@ export const routes = [
     },
     {
         path: "/family/cases/:id",
-        component: () => import("../../care-coordination/presentation/views/family-case.vue"),
+        component: () =>
+            import(
+                "../../care-coordination/presentation/views/family-case.vue"
+                ),
         meta: { role: "family", title: "caseFollowUp" },
     },
     {
@@ -45,3 +48,4 @@ export const routes = [
         meta: { role: "older-adult", title: "older-adult" },
     },
 ];
+
