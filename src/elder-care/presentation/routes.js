@@ -5,7 +5,8 @@ export const routes = [
     {
         path: "/professional",
         name: "professional",
-        component: () => import("../../shared/presentation/views/stage.vue"),
+        component: () =>
+            import("../../alerting/presentation/views/dashboard.vue"),
         meta: { role: "professional", title: "careOverview" },
     },
     {
