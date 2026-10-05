@@ -16,7 +16,7 @@ export const routes = [
     },
     {
         path: "/professional/patients/:id",
-        component: () => import("../../shared/presentation/views/stage.vue"),
+        component: () => import("./views/patient-detail.vue"),
         meta: { role: "professional", title: "patientDetail" },
     },
     {
