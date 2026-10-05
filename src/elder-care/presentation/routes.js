@@ -30,7 +30,7 @@ export const routes = [
     {
         path: "/family",
         name: "family",
-        component: () => import("../../shared/presentation/views/stage.vue"),
+        component: () => import("./views/family-dashboard.vue"),
         meta: { role: "family", title: "familyOverview" },
     },
     {
