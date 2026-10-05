@@ -35,7 +35,7 @@ export const routes = [
     },
     {
         path: "/family/cases/:id",
-        component: () => import("../../shared/presentation/views/stage.vue"),
+        component: () => import("../../care-coordination/presentation/views/family-case.vue"),
         meta: { role: "family", title: "caseFollowUp" },
     },
     {
