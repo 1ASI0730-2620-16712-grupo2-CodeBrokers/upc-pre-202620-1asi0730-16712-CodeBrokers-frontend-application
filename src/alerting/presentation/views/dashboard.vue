@@ -4,7 +4,7 @@ import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import Button from "primevue/button";
 import { useWorkspace } from "../../../shared/application/workspace.store.js";
-import { pendingCount } from "../../domain/alert.js";
+import { pendingCount, orderAlerts } from "../../domain/alert.js";
 import StatusTag from "../../../shared/presentation/components/status-tag.vue";
 import StatePanel from "../../../shared/presentation/components/state-panel.vue";
 import { useFormat } from "../../../shared/presentation/format.js";
@@ -13,10 +13,14 @@ const { t } = useI18n(),
   route = useRoute(),
   router = useRouter(),
   { date } = useFormat();
-const status = computed(() => route.query.status || "PENDING");
+const status = computed(() => route.query.status || "PENDING"),
+  direction = computed(() => route.query.order || "desc");
 const filtered = computed(() =>
-  store.alerts.filter(
-    (a) => status.value === "ALL" || a.status === status.value,
+  orderAlerts(
+    store.alerts.filter(
+      (a) => status.value === "ALL" || a.status === status.value,
+    ),
+    direction.value,
   ),
 );
 
@@ -103,6 +107,15 @@ onMounted(() => store.load("professional"));
               {{ t("codes." + s) }}
             </option>
           </select></label
+        ><label
+          >{{ t("sortPriority")
+          }}<select
+            :value="direction"
+            @change="setFilter('order', $event.target.value)"
+          >
+            <option value="desc">{{ t("highestFirst") }}</option>
+            <option value="asc">{{ t("lowestFirst") }}</option>
+          </select></label
         >
       </div>
       <StatePanel :empty="!filtered.length" />
@@ -115,6 +128,7 @@ onMounted(() => store.load("professional"));
             query: {
               alert: alert.id,
               returnStatus: status,
+              returnOrder: direction,
             },
           }"
           class="alert-row"
@@ -127,7 +141,8 @@ onMounted(() => store.load("professional"));
             }}</strong
             ><span>{{ t("types." + alert.type) }} · {{ alert.id }}</span>
           </div>
-          <StatusTag :value="alert.status" /><time>{{ date(alert.raisedAt) }}</time
+          <StatusTag :value="alert.severity" /><StatusTag
+            :value="alert.status" /><time>{{ date(alert.raisedAt) }}</time
           ><i class="pi pi-arrow-up-right" aria-hidden="true"
         /></RouterLink>
       </div></section
