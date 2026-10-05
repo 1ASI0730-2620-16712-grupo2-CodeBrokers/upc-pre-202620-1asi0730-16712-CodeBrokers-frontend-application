@@ -10,31 +10,35 @@ import { i18n } from "./i18n.js";
 import "./style.css";
 import "./feature-styles.css";
 
+// Defines the primary colors used by PrimeVue components.
 const theme = definePreset(Material, {
-  semantic: {
-    primary: {
-      50: "#e8f5e9",
-      100: "#c8e6c9",
-      200: "#a5d6a7",
-      300: "#81c784",
-      400: "#66bb6a",
-      500: "#2E7D32",
-      600: "#2E7D32",
-      700: "#1B5E20",
-      800: "#174f1b",
-      900: "#123f16",
-      950: "#0b2b0e",
+    semantic: {
+        primary: {
+            50: "#eefbf5",
+            100: "#d5f5e5",
+            200: "#ace9ce",
+            300: "#74d6ae",
+            400: "#39b98b",
+            500: "#00694c",
+            600: "#00694c",
+            700: "#09563f",
+            800: "#104535",
+            900: "#10392d",
+            950: "#042219",
+        },
     },
-  },
 });
 
-const app = createApp(App);
-app.use(createPinia());
-app.use(i18n);
-app.use(PrimeVue, {
-  theme: { preset: theme, options: { darkModeSelector: ".vitalink-dark" } },
-  ripple: true,
-});
-app.use(router);
-
+// Registers the application plugins before mounting the root component.
+const app = createApp(App)
+    .use(createPinia())
+    .use(i18n)
+    .use(PrimeVue, {
+        theme: {
+            preset: theme,
+            options: { darkModeSelector: ".vitalink-dark" },
+        },
+        ripple: true,
+    })
+    .use(router);
 router.isReady().then(() => app.mount("#app"));

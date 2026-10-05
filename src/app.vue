@@ -2,10 +2,8 @@
 import { nextTick, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-
 const route = useRoute();
 const { t, locale } = useI18n();
-
 watch(
   [() => route.meta.title, locale],
   () => {
@@ -14,7 +12,6 @@ watch(
   },
   { immediate: true },
 );
-
 watch(
   () => route.path,
   async () => {
@@ -23,10 +20,13 @@ watch(
   },
 );
 </script>
-
 <template>
-  <a class="skip" href="#main" @click.prevent="$event.currentTarget.ownerDocument.getElementById('main')?.focus()">
-    {{ t("skip") }}
-  </a>
-  <RouterView />
+  <a
+    class="skip"
+    href="#main"
+    @click.prevent="
+      $event.currentTarget.ownerDocument.getElementById('main')?.focus()
+    "
+    >{{ t("skip") }}</a
+  ><RouterView />
 </template>

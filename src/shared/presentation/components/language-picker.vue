@@ -1,24 +1,30 @@
 <script setup>
 import { useI18n } from "vue-i18n";
+import { ref } from "vue";
+const { t, locale } = useI18n();
+const error = ref(false);
 
-const { locale } = useI18n();
-
-function changeLanguage(event) {
+/**
+ * Updates and stores the selected locale.
+ *
+ * @param {Event} event - Language selection event.
+ */
+function set(event) {
   locale.value = event.target.value;
   try {
     localStorage.setItem("vitalink.locale", locale.value);
+    error.value = false;
   } catch {
-    // Storage is optional; the UI still works without it.
+    error.value = true;
   }
 }
 </script>
-
 <template>
-  <label class="language-picker">
-    <span class="sr-only">{{ $t("language") }}</span>
-    <select :value="locale" @change="changeLanguage">
-      <option value="es">ES</option>
+  <div class="language-picker">
+    <label class="sr-only" for="header-language">{{ t("language") }}</label
+    ><select id="header-language" :value="locale" @change="set">
       <option value="en">EN</option>
-    </select>
-  </label>
+      <option value="es">ES</option></select
+    ><span v-if="error" role="alert">{{ t("storageError") }}</span>
+  </div>
 </template>
