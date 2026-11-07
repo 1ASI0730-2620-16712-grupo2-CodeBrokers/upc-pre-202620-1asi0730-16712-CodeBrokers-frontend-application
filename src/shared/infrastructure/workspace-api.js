@@ -1,4 +1,5 @@
 import axios from "axios";
+import { readAlerts } from "../../alerting/infrastructure/alert-api.js";
 
 const api = axios.create({
     baseURL:
@@ -91,23 +92,25 @@ export async function readWorkspace(role, scenario = "normal") {
     }
 
     try {
-        const [patients, alerts, records, interventions] = await Promise.all([
+        const [patients, records] = await Promise.all([
             api.get("/patients"),
-            api.get("/alerts"),
             api.get("/records"),
-            api.get("/interventions"),
         ]);
-
-        return applyScope(
-            {
-                patients: patients.data,
-                alerts: alerts.data,
-                records: records.data,
-                interventions: interventions.data,
-            },
+        const scoped = applyScope(
+            { patients: patients.data, alerts: [], records: records.data, interventions: [] },
             role,
             scenario,
         );
+        const byPatient = await Promise.all(
+            scoped.patients.map((p) =>
+                readAlerts(p.id, scoped.records.filter((r) => r.patientId === p.id)),
+            ),
+        );
+        return {
+            ...scoped,
+            alerts: byPatient.flatMap((x) => x.alerts),
+            interventions: byPatient.flatMap((x) => x.interventions),
+        };
     } catch (error) {
         throw new WorkspaceApiError(
             error.code === "ECONNABORTED" ? "TIMEOUT" : "UNAVAILABLE",
