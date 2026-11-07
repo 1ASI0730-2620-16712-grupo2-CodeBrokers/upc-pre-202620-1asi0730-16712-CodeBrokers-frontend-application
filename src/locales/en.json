@@ -78,7 +78,8 @@
     "bloodPressure": "Blood pressure",
     "glucose": "Glucose",
     "followUp": "Care follow-up",
-    "note": "Professional note"
+    "note": "Professional note",
+    "alert": "Care alert"
   },
   "careTimeline": "Care timeline",
   "lastProfessional": "Last professional intervention",
@@ -93,7 +94,7 @@
   "historyIntro": "Explore dated records and their origin in one place.",
   "viewHistory": "Open health history",
   "recordInformation": "Record information",
-  "readOnlyCopy": "Read-only access. Clinical actions and persistent changes are unavailable.",
+  "readOnlyCopy": "You can start a review or mark an alert as attended. Other clinical changes are unavailable.",
   "backPatient": "Back to patient",
   "historyCopy": "Recorded information, sorted from newest to oldest.",
   "fromDate": "From date",
@@ -158,5 +159,14 @@
   "terms": "Terms of use",
   "academicUse": "Academic use",
   "termsCopy": "This application does not contact healthcare providers or emergency services. The role selector is not an authentication or authorization system.",
-  "termsStorage": "Only language and notification preferences are saved locally. No real accounts or clinical records are collected. Clear browser site data to remove these preferences."
+  "termsStorage": "Only language and notification preferences are saved locally. No real accounts or clinical records are collected. Clear browser site data to remove these preferences.",
+  "startReview": "Start review",
+  "markAttended": "Mark as attended",
+  "unknownActor": "Care team member",
+  "statusErrors": {
+    "CONFLICT": "The alert changed in the meantime. The latest version was loaded; review it and try again.",
+    "NOT_FOUND": "This alert no longer exists.",
+    "INVALID": "The change is not valid for this alert.",
+    "UNAVAILABLE": "The change could not be saved. Check your connection and try again."
+  }
 }
