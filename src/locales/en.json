@@ -164,7 +164,7 @@
   "markAttended": "Mark as attended",
   "unknownActor": "Care team member",
   "statusErrors": {
-    "CONFLICT": "The alert changed in the meantime. The latest version was loaded; review it and try again.",
+    "CONFLICT": "The alert could not be updated. The latest version was loaded; try again.",
     "NOT_FOUND": "This alert no longer exists.",
     "INVALID": "The change is not valid for this alert.",
     "UNAVAILABLE": "The change could not be saved. Check your connection and try again."

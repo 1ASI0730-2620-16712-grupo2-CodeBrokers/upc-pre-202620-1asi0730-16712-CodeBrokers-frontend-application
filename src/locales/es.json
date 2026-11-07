@@ -164,7 +164,7 @@
   "markAttended": "Marcar como atendida",
   "unknownActor": "Integrante del equipo de cuidado",
   "statusErrors": {
-    "CONFLICT": "La alerta cambió mientras tanto. Se cargó la versión vigente; revísala e inténtalo de nuevo.",
+    "CONFLICT": "No se pudo actualizar la alerta. Se cargó la versión vigente; inténtalo de nuevo.",
     "NOT_FOUND": "Esta alerta ya no existe.",
     "INVALID": "El cambio no es válido para esta alerta.",
     "UNAVAILABLE": "No se pudo guardar el cambio. Revisa tu conexión e inténtalo de nuevo."
