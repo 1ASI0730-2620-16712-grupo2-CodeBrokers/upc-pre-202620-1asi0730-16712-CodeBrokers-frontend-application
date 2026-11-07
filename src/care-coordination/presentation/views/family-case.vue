@@ -76,7 +76,7 @@ watch(
       <section class="responsible-panel">
         <h3>{{ t("lastResponsible") }}</h3>
         <template v-if="last"
-          ><strong>{{ last.actor }}</strong>
+          ><strong>{{ last.actor || t("unknownActor") }}</strong>
           <p>{{ t(last.role) }} · {{ date(last.at) }}</p></template
         >
         <p v-else>{{ t("noIntervention") }}</p>
