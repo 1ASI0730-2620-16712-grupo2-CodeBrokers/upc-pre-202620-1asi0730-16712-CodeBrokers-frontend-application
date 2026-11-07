@@ -56,6 +56,10 @@ Incluye panel profesional, alertas, pacientes asignados, detalle, historial, res
 
 `server/db.json` contiene los recursos `patients`, `alerts`, `records` e `interventions`. `server/routes.json` expone los recursos bajo `/api/v1`. La aplicación los consume por HTTP mediante Axios.
 
+Las alertas y sus cambios de estado provienen del backend de VitaLink, configurado en `VITE_BACKEND_API_BASE_URL`. Pacientes y registros siguen en JSON Server.
+Mientras no exista inicio de sesión, `src/preventive-monitoring/infrastructure/older-adult-ids.js` relaciona los pacientes del frontend con identificadores de demostración del backend.
+Los cambios de estado se registran con un profesional de demostración definido en `src/alerting/infrastructure/demo-actors.js`.
+
 Los estados vacíos y de error se presentan desde las vistas correspondientes cuando el servicio no entrega información utilizable.
 
 ## Límites

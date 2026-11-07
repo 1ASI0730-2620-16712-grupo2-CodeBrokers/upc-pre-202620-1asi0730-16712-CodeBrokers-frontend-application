@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-11-06
+
+### Added
+
+- Loaded alerts and their status history from the VitaLink backend through `VITE_BACKEND_API_BASE_URL`.
+- Added "Start review" and "Mark as attended" actions to the professional patient detail, with localized error messages.
+
+### Changed
+
+- Reloaded the latest alert version after a conflict instead of overwriting it.
+- Showed "Care team member" when the actor of a status change is unknown.
+- Updated the patient detail notice, which is no longer read-only.
+
 ## [0.2.11] - 2026-10-03
 
 ### Changed

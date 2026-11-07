@@ -103,6 +103,34 @@ watch(
                 date(a.raisedAt)
               }}</time>
             </div>
+            <div
+              v-if="a.status === 'PENDING' || a.status === 'IN_REVIEW'"
+              class="status-actions"
+            >
+              <Button
+                v-if="a.status === 'PENDING'"
+                :label="t('startReview')"
+                icon="pi pi-eye"
+                :loading="store.changingId === a.id"
+                :disabled="!!store.changingId"
+                @click="store.changeStatus(a, 'IN_REVIEW')"
+              />
+              <Button
+                v-else
+                :label="t('markAttended')"
+                icon="pi pi-check"
+                :loading="store.changingId === a.id"
+                :disabled="!!store.changingId"
+                @click="store.changeStatus(a, 'ATTENDED')"
+              />
+            </div>
+            <p
+              v-if="store.actionError && store.actionError.alertId === a.id"
+              class="status-error"
+              role="alert"
+            >
+              {{ t("statusErrors." + store.actionError.code) }}
+            </p>
             <Timeline
               :items="store.interventions"
               :alert-id="a.id"
