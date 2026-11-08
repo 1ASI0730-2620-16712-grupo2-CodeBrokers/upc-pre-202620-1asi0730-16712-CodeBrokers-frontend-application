@@ -1,63 +1,50 @@
 <script setup>
-import { ref, computed, watch } from "vue";
-import { useRoute } from "vue-router";
-import { useI18n } from "vue-i18n";
-import Button from "primevue/button";
-import { useWorkspace } from "../../../shared/application/workspace.store.js";
-import { filterHistory } from "../../domain/history.js";
-import StatePanel from "../../../shared/presentation/components/state-panel.vue";
-import { useFormat } from "../../../shared/presentation/format.js";
-const route = useRoute(),
-  { t } = useI18n(),
-  { date } = useFormat(),
-  store = useWorkspace(),
-  from = ref(""),
-  to = ref(""),
-  type = ref("ALL"),
-  applied = ref({}),
-  validation = ref("");
-const patient = computed(() =>
-  store.patients.find((p) => p.id === route.params.id),
-);
-const filtered = computed(() =>
-  filterHistory(
-    store.records.filter((r) => r.patientId === route.params.id),
-    applied.value,
-  ),
-);
+import { getHealthRecords } from '@/shared/infrastructure/workspace-api.js';
+import { ref, computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { getHealthRecords } from '@/shared/infrastructure/workspace-api';
 
-/**
- * Applies the selected history filters.
- */
-function apply() {
+const route = useRoute();
+const olderAdultId = computed(() => route.params.id);
+
+const records = ref([]);
+const isLoading = ref(true);
+const isError = ref(false);
+
+const selectedType = ref('');
+const startDate = ref('');
+const endDate = ref('');
+
+const fetchHistory = async () => {
+  if (!olderAdultId.value) return;
+  isLoading.value = true;
+  isError.value = false;
+  
   try {
-    filterHistory([], { from: from.value, to: to.value, type: type.value });
-    applied.value = { from: from.value, to: to.value, type: type.value };
-    validation.value = "";
-  } catch {
-    validation.value = "dateError";
+    const data = await getHealthRecords(olderAdultId.value);
+    records.value = Array.isArray(data) ? data : (data.items || []);
+  } catch (err) {
+    isError.value = true;
+  } finally {
+    isLoading.value = false;
   }
-}
+};
 
-/**
- * Restores the history filters to their initial values.
- */
-function clear() {
-  from.value = "";
-  to.value = "";
-  type.value = "ALL";
-  applied.value = {};
-  validation.value = "";
-}
-watch(
-  () => route.params.id,
-  () => {
-    clear();
-    store.load("professional");
-  },
-  { immediate: true },
-);
+const filteredRecords = computed(() => {
+  return records.value.filter(record => {
+    const matchesType = !selectedType.value || record.recordTypeCode === selectedType.value;
+    const recordDate = new Date(record.createdAt || record.timestamp);
+    const matchesStart = !startDate.value || recordDate >= new Date(startDate.value);
+    const matchesEnd = !endDate.value || recordDate <= new Date(endDate.value);
+    return matchesType && matchesStart && matchesEnd;
+  });
+});
+
+onMounted(() => {
+  fetchHistory();
+});
 </script>
+
 <template>
   <RouterLink
     :to="{
