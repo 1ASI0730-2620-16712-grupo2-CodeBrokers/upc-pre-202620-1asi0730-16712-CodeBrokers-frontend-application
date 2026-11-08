@@ -16,12 +16,26 @@ const selected = computed(() => route.query.patient || store.patients[0]?.id);
 const patient = computed(() =>
   store.patients.find((p) => p.id === selected.value),
 );
+const openStatuses = ["PENDING", "IN_REVIEW"];
+
 const alerts = computed(() =>
-  store.alerts.filter(
-    (a) =>
-      a.patientId === selected.value &&
-      ["PENDING", "IN_REVIEW"].includes(a.status),
-  ),
+    store.alerts
+        .filter((a) => a.patientId === selected.value)
+        .sort((a, b) => {
+          const aOpen = openStatuses.includes(a.status);
+          const bOpen = openStatuses.includes(b.status);
+
+          if (aOpen !== bOpen) return aOpen ? -1 : 1;
+
+          return (
+              (b.raisedAt ?? "").localeCompare(a.raisedAt ?? "") ||
+              String(a.id).localeCompare(String(b.id))
+          );
+        }),
+);
+
+const openAlerts = computed(() =>
+    alerts.value.filter((a) => openStatuses.includes(a.status)),
 );
 const latest = computed(() =>
   ["heartRate", "oxygen", "bloodPressure", "glucose"].map((type) => ({
@@ -90,7 +104,7 @@ onMounted(() => store.load("family"));
         </div>
         <div class="family-summary">
           <span class="eyebrow">{{ t("openAlerts") }}</span
-          ><strong>{{ alerts.length }}</strong
+          ><strong>{{ openAlerts.length }}</strong>
           ><small>{{ t("recordedOnly") }}</small>
         </div>
       </section>
@@ -99,7 +113,7 @@ onMounted(() => store.load("family"));
         ><span>{{ t("lastChecked") }}: {{ date(store.lastFetched) }}</span>
       </div>
       <p class="notice">
-        {{ t(alerts.length ? "datedRecordsNotice" : "noClinicalConclusion") }}
+        {{ t(openAlerts.length ? "datedRecordsNotice" : "noClinicalConclusion") }}
       </p>
       <h2>{{ t("latestRecords") }}</h2>
       <div class="vitals-grid">
