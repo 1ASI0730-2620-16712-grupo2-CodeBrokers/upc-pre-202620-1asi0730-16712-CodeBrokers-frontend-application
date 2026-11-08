@@ -5,6 +5,7 @@ import { useI18n } from "vue-i18n";
 import Button from "primevue/button";
 import { useWorkspace } from "../../../shared/application/workspace.store.js";
 import { filterHistory } from "../../domain/history.js";
+import { readHealthRecords } from "../../infrastructure/health-record-api.js";
 import StatePanel from "../../../shared/presentation/components/state-panel.vue";
 import { useFormat } from "../../../shared/presentation/format.js";
 const route = useRoute(),
@@ -15,13 +16,15 @@ const route = useRoute(),
   to = ref(""),
   type = ref("ALL"),
   applied = ref({}),
-  validation = ref("");
+  validation = ref(""),
+  apiRecords = ref(null);
 const patient = computed(() =>
   store.patients.find((p) => p.id === route.params.id),
 );
 const filtered = computed(() =>
   filterHistory(
-    store.records.filter((r) => r.patientId === route.params.id),
+    apiRecords.value ??
+      store.records.filter((r) => r.patientId === route.params.id),
     applied.value,
   ),
 );
@@ -40,6 +43,18 @@ function apply() {
 }
 
 /**
+ * Loads the patient records from the backend; keeps the mock records when none are returned.
+ */
+async function loadApiRecords() {
+  try {
+    const records = await readHealthRecords(route.params.id);
+    apiRecords.value = records?.length ? records : null;
+  } catch {
+    apiRecords.value = null;
+  }
+}
+
+/**
  * Restores the history filters to their initial values.
  */
 function clear() {
@@ -54,6 +69,7 @@ watch(
   () => {
     clear();
     store.load("professional");
+    loadApiRecords();
   },
   { immediate: true },
 );
@@ -77,7 +93,10 @@ watch(
       :label="t('refresh')"
       icon="pi pi-refresh"
       outlined
-      @click="store.load()"
+      @click="
+        store.load();
+        loadApiRecords();
+      "
       :disabled="store.loading"
     />
   </div>
@@ -106,6 +125,10 @@ watch(
             'oxygen',
             'bloodPressure',
             'glucose',
+            'bodyTemperature',
+            'weight',
+            'fallDetected',
+            'medicationIntake',
             'note',
           ]"
           :value="k"
@@ -145,8 +168,8 @@ watch(
           <div>
             <span class="eyebrow">{{ record.id }}</span>
             <h2>{{ t("types." + record.type) }}</h2>
-            <p v-if="record.note" class="muted">
-              {{ t("notes." + record.note) }}
+            <p v-if="record.note || record.noteText" class="muted">
+              {{ record.noteText ?? t("notes." + record.note) }}
             </p>
             <span class="small muted"
               >{{ t("origin") }}: {{ t("origins." + record.origin) }}</span
