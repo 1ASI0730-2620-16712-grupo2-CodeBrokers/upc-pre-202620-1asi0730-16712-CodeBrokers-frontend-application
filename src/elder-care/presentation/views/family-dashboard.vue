@@ -102,11 +102,11 @@ onMounted(() => store.load("family"));
             {{ patient.id }}
           </p>
         </div>
-        <div class="family-summary">
-          <span class="eyebrow">{{ t("openAlerts") }}</span
-          ><strong>{{ openAlerts.length }}</strong>
-          ><small>{{ t("recordedOnly") }}</small>
-        </div>
+      <div class="family-summary">
+        <span class="eyebrow">{{ t("openAlerts") }}</span>
+        <strong>{{ openAlerts.length }}</strong>
+        <small>{{ t("recordedOnly") }}</small>
+      </div>
       </section>
       <div class="data-caption">
         <span>{{ t("lastRecord") }}: {{ date(patient.lastRecordAt) }}</span
