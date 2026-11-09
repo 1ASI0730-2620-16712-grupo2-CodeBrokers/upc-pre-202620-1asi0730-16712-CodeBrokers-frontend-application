@@ -78,7 +78,12 @@
     "bloodPressure": "Presión arterial",
     "glucose": "Glucosa",
     "followUp": "Seguimiento de cuidado",
-    "note": "Nota profesional"
+    "note": "Nota profesional",
+    "alert": "Alerta de cuidado",
+    "bodyTemperature": "Temperatura corporal",
+    "weight": "Peso",
+    "fallDetected": "Caída detectada",
+    "medicationIntake": "Toma de medicación"
   },
   "careTimeline": "Historial de intervenciones",
   "lastProfessional": "Última intervención profesional",
@@ -93,7 +98,7 @@
   "historyIntro": "Consulta los registros fechados y su origen en un solo lugar.",
   "viewHistory": "Abrir historial de salud",
   "recordInformation": "Información del registro",
-  "readOnlyCopy": "Acceso de solo lectura. Las acciones clínicas y cambios persistentes no están disponibles.",
+  "readOnlyCopy": "Puedes iniciar una revisión o marcar una alerta como atendida. Otros cambios clínicos no están disponibles.",
   "backPatient": "Volver al paciente",
   "historyCopy": "Información registrada, ordenada de más reciente a más antigua.",
   "fromDate": "Desde",
@@ -109,7 +114,10 @@
   },
   "origins": {
     "manual": "Ingreso manual",
-    "professional": "Profesional de salud"
+    "professional": "Profesional de salud",
+    "olderAdult": "Adulto mayor",
+    "familyCaregiver": "Familiar cuidador",
+    "careProvider": "Profesional de cuidado"
   },
   "familyWorkspace": "CUIDADO FAMILIAR",
   "familyOverview": "Juntos en su cuidado",
@@ -158,5 +166,14 @@
   "terms": "Términos de uso",
   "academicUse": "Uso académico",
   "termsCopy": "Esta aplicación no contacta profesionales ni servicios de emergencia. El selector de rol no es un sistema de autenticación o autorización.",
-  "termsStorage": "Solo se guardan localmente el idioma y las preferencias de notificación. No se recopilan cuentas ni registros clínicos reales. Borra los datos del sitio en el navegador para eliminar las preferencias."
+  "termsStorage": "Solo se guardan localmente el idioma y las preferencias de notificación. No se recopilan cuentas ni registros clínicos reales. Borra los datos del sitio en el navegador para eliminar las preferencias.",
+  "startReview": "Iniciar revisión",
+  "markAttended": "Marcar como atendida",
+  "unknownActor": "Integrante del equipo de cuidado",
+  "statusErrors": {
+    "CONFLICT": "No se pudo actualizar la alerta. Se cargó la versión vigente; inténtalo de nuevo.",
+    "NOT_FOUND": "Esta alerta ya no existe.",
+    "INVALID": "El cambio no es válido para esta alerta.",
+    "UNAVAILABLE": "No se pudo guardar el cambio. Revisa tu conexión e inténtalo de nuevo."
+  }
 }

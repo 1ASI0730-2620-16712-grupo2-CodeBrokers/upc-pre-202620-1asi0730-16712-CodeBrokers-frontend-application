@@ -20,7 +20,7 @@ const last = computed(() => latestProfessional(props.items, props.alertId));
     <p v-if="professional" class="review-summary">
       {{
         last
-          ? t("lastProfessional") + ": " + last.actor + " · " + date(last.at)
+          ? t("lastProfessional") + ": " + (last.actor || t("unknownActor")) + " · " + date(last.at)
           : t("noProfessional")
       }}
     </p>
@@ -29,7 +29,7 @@ const last = computed(() => latestProfessional(props.items, props.alertId));
       <li v-for="event in events" :key="event.id">
         <span class="timeline-dot" aria-hidden="true" />
         <div>
-          <strong>{{ event.actor }}</strong
+          <strong>{{ event.actor || t("unknownActor") }}</strong
           ><span class="muted small"> · {{ t(event.role) }}</span>
           <div class="transition">
             <StatusTag :value="event.from" /><span aria-hidden="true">→</span

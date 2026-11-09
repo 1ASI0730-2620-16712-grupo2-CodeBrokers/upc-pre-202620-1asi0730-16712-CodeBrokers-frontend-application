@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { readWorkspace } from "../infrastructure/workspace-api.js";
 import { assemblePatients } from "../../elder-care/infrastructure/patient.assembler.js";
 import { assembleAlerts } from "../../alerting/infrastructure/alert.assembler.js";
+import { changeAlertStatus } from "../../alerting/infrastructure/alert-api.js";
 
 /**
  * Coordinates the care workspace data displayed by the UI.
@@ -20,6 +21,8 @@ export const useWorkspace = defineStore("workspace", () => {
         lastFetched = ref(null),
         role = ref(""),
         scenario = ref("normal");
+    const actionError = ref(null),
+        changingId = ref("");
     let sequence = 0;
 
     /**
@@ -60,6 +63,27 @@ export const useWorkspace = defineStore("workspace", () => {
             if (token === sequence) loading.value = false;
         }
     }
+
+    /**
+     * Changes the status of an alert and refreshes the workspace.
+     *
+     * @param {Object} alert - Alert to change.
+     * @param {"IN_REVIEW"|"ATTENDED"} status - Requested status.
+     * @returns {Promise<void>}
+     */
+    async function changeStatus(alert, status) {
+        changingId.value = alert.id;
+        actionError.value = null;
+        try {
+            await changeAlertStatus(alert, status);
+            await load();
+        } catch (e) {
+            actionError.value = { alertId: alert.id, code: e.code || "UNAVAILABLE" };
+            if (e.code === "CONFLICT") await load();
+        } finally {
+            changingId.value = "";
+        }
+    }
     return {
         patients,
         alerts,
@@ -72,5 +96,8 @@ export const useWorkspace = defineStore("workspace", () => {
         role,
         scenario,
         load,
+        actionError,
+        changingId,
+        changeStatus,
     };
 });
