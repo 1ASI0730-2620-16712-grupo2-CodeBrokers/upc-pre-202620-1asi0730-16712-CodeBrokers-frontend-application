@@ -1,13 +1,6 @@
-import axios from "axios";
+import { http as api } from "../../shared/infrastructure/http-client.js";
 import { assembleApiAlerts, assembleStatusHistory } from "./alert.assembler.js";
 import { DEMO_PROFESSIONAL_ID } from "./demo-actors.js";
-
-const api = axios.create({
-    baseURL:
-        import.meta.env.VITE_BACKEND_API_BASE_URL ||
-        "http://localhost:5270/api/v1",
-    timeout: 5000,
-});
 
 /**
  * Error raised when an alert status change cannot be completed.

@@ -1,12 +1,5 @@
-import axios from "axios";
+import { http as api } from "../../shared/infrastructure/http-client.js";
 import { assembleHealthRecords } from "./health-record.assembler.js";
-
-const api = axios.create({
-    baseURL:
-        import.meta.env.VITE_BACKEND_API_BASE_URL ||
-        "http://localhost:5270/api/v1",
-    timeout: 5000,
-});
 
 /**
  * Reads the health records of one patient from the backend.
