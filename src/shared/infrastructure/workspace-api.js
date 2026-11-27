@@ -1,11 +1,7 @@
-import axios from "axios";
 import { readAlerts } from "../../alerting/infrastructure/alert-api.js";
-
-const api = axios.create({
-    baseURL:
-        import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api/v1",
-    timeout: 5000,
-});
+import { readOlderAdults } from "../../elder-care/infrastructure/older-adult-api.js";
+import { assembleOlderAdult } from "../../elder-care/infrastructure/older-adult.assembler.js";
+import { readHealthRecords } from "../../preventive-monitoring/infrastructure/health-record-api.js";
 
 /**
  * Error returned by the care data service.
@@ -28,13 +24,9 @@ export class WorkspaceApiError extends Error {
  * @returns {Object} Scoped workspace resources.
  */
 function applyScope(data, role, scenario) {
-    const scope = data.patients.filter((patient) =>
-        role === "professional"
-            ? patient.providerId === "DR-01"
-            : role === "family"
-              ? patient.familyIds.includes("FC-01")
-              : patient.id === "P-101",
-    );
+    // TODO: filter the patients by the signed-in user once the session is available (VTL-79).
+    // Until then every role sees the older adults returned by the backend.
+    const scope = data.patients;
 
     if (scenario === "empty") {
         return { patients: [], alerts: [], records: [], interventions: [] };
@@ -80,7 +72,7 @@ function applyScope(data, role, scenario) {
 }
 
 /**
- * Retrieves the workspace resources from JSON Server.
+ * Retrieves the workspace resources from the backend.
  *
  * @param {string} role - Current role.
  * @param {string} scenario - Data scenario.
@@ -92,12 +84,22 @@ export async function readWorkspace(role, scenario = "normal") {
     }
 
     try {
-        const [patients, records] = await Promise.all([
-            api.get("/patients"),
-            api.get("/records"),
-        ]);
+        const olderAdults = await readOlderAdults();
+        const recordsByPatient = await Promise.all(
+            olderAdults.map((o) =>
+                readHealthRecords(o.id).catch(() => []),
+            ),
+        );
+        const patients = olderAdults.map((o, i) =>
+            assembleOlderAdult(o, recordsByPatient[i] ?? []),
+        );
         const scoped = applyScope(
-            { patients: patients.data, alerts: [], records: records.data, interventions: [] },
+            {
+                patients,
+                alerts: [],
+                records: recordsByPatient.flat(),
+                interventions: [],
+            },
             role,
             scenario,
         );

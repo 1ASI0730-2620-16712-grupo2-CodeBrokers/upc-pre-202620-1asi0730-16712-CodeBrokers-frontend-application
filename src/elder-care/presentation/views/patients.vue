@@ -114,7 +114,7 @@ onMounted(() => store.load("professional"));
     </div>
       <h2>{{ p.fullName }}</h2>
       <p class="muted">
-        {{ p.id }} · {{ p.age }} {{ t("years") }} · {{ p.location }}
+        {{ p.age }} {{ t("years") }} · {{ p.location }}
       </p>
       <div class="patient-card-foot">
           <span

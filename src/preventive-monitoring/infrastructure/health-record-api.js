@@ -1,5 +1,4 @@
 import axios from "axios";
-import { OLDER_ADULT_IDS } from "./older-adult-ids.js";
 import { assembleHealthRecords } from "./health-record.assembler.js";
 
 const api = axios.create({
@@ -12,13 +11,12 @@ const api = axios.create({
 /**
  * Reads the health records of one patient from the backend.
  *
- * @param {string} patientId - Front-end patient identifier.
- * @returns {Promise<Object[]|null>} Records, or null when the patient has no backend id.
+ * @param {string} patientId - Older adult identifier (GUID) returned by the backend.
+ * @returns {Promise<Object[]|null>} Records, or null when there is no patient id.
  */
 export async function readHealthRecords(patientId) {
-    const guid = OLDER_ADULT_IDS[patientId];
-    if (!guid) return null;
-    const response = await api.get(`/older-adults/${guid}/health-records`);
+    if (!patientId) return null;
+    const response = await api.get(`/older-adults/${patientId}/health-records`);
     const items = Array.isArray(response.data)
         ? response.data
         : (response.data.items ?? []);
