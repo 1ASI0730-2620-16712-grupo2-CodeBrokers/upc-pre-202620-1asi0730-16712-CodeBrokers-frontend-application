@@ -98,8 +98,7 @@ onMounted(() => store.load("family"));
           <p class="eyebrow">{{ t("yourLovedOne") }}</p>
           <h2>{{ patient.fullName }}</h2>
           <p class="muted">
-            {{ patient.age }} {{ t("years") }} · {{ patient.location }} ·
-            {{ patient.id }}
+            {{ patient.age }} {{ t("years") }} · {{ patient.location }}
           </p>
         </div>
       <div class="family-summary">

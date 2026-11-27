@@ -36,7 +36,7 @@ export function filterPatients(
         .filter(
             (p) =>
                 (!term ||
-                    `${p.fullName} ${p.id}`
+                    p.fullName
                         .toLocaleLowerCase()
                         .includes(term)) &&
                 (!outdated || p.outdated) &&

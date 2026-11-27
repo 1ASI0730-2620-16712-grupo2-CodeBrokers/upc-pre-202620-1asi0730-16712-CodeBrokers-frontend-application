@@ -64,7 +64,7 @@ watch(
           <p class="eyebrow">{{ t("patientDetail") }}</p>
           <h1>{{ patient.fullName }}</h1>
           <p class="muted">
-            {{ patient.id }} · {{ patient.age }} {{ t("years") }} ·
+            {{ patient.age }} {{ t("years") }} ·
             {{ patient.location }}
           </p>
         </div>
