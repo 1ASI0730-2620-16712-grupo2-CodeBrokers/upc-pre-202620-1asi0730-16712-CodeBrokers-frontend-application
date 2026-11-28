@@ -175,5 +175,16 @@
     "NOT_FOUND": "This alert no longer exists.",
     "INVALID": "The change is not valid for this alert.",
     "UNAVAILABLE": "The change could not be saved. Check your connection and try again."
+  },
+  "signIn": "Sign in",
+  "signInCopy": "Use the account registered in VitaLink.",
+  "password": "Password",
+  "signingIn": "Signing in…",
+  "requiredFields": "Enter your email and password.",
+  "signInErrors": {
+    "INVALID_CREDENTIALS": "The email or password is incorrect.",
+    "ACCOUNT_DISABLED": "This account is not enabled to sign in.",
+    "TOO_MANY_ATTEMPTS": "Too many attempts. Try again in a minute.",
+    "UNAVAILABLE": "The service could not be reached. Try again later."
   }
 }

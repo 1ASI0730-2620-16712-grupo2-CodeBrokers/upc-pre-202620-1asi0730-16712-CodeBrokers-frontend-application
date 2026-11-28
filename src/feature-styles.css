@@ -670,3 +670,28 @@ select {
     color: #b3261e;
     font-weight: 600;
 }
+.sign-in {
+  display: flex;
+  justify-content: center;
+  padding: 70px 24px 90px;
+}
+.sign-in-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+}
+.sign-in-form h1 {
+  margin: 0;
+}
+.sign-in-form .muted {
+  margin: 0;
+}
+.sign-in-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 600;
+}

@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Shell from "./shared/presentation/components/shell.vue";
 import { routes as careRoutes } from "./elder-care/presentation/routes.js";
+import { routes as iamRoutes } from "./iam/presentation/routes.js";
 
 /**
  * Application router with lazy-loaded feature views.
@@ -19,6 +20,7 @@ export const router = createRouter({
             component: () => import("./shared/presentation/views/terms.vue"),
             meta: { title: "terms" },
         },
+        ...iamRoutes,
         {
             path: "/",
             component: Shell,

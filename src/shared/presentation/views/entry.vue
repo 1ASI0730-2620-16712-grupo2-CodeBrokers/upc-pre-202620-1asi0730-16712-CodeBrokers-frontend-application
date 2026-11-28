@@ -31,7 +31,7 @@ const roles = [
       <RouterLink
         v-for="role in roles"
         :key="role.id"
-        :to="'/' + role.id"
+        :to="{ name: 'sign-in' }"
         class="role-card"
         ><span :class="role.icon" aria-hidden="true" />
         <h2>{{ t(role.id) }}</h2>

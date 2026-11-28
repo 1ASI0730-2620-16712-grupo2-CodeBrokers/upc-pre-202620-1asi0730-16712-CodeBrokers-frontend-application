@@ -175,5 +175,16 @@
     "NOT_FOUND": "Esta alerta ya no existe.",
     "INVALID": "El cambio no es válido para esta alerta.",
     "UNAVAILABLE": "No se pudo guardar el cambio. Revisa tu conexión e inténtalo de nuevo."
+  },
+  "signIn": "Iniciar sesión",
+  "signInCopy": "Ingresa con la cuenta registrada en VitaLink.",
+  "password": "Contraseña",
+  "signingIn": "Ingresando…",
+  "requiredFields": "Ingresa tu correo y contraseña.",
+  "signInErrors": {
+    "INVALID_CREDENTIALS": "El correo o la contraseña son incorrectos.",
+    "ACCOUNT_DISABLED": "Esta cuenta no está habilitada para iniciar sesión.",
+    "TOO_MANY_ATTEMPTS": "Demasiados intentos. Inténtalo de nuevo en un minuto.",
+    "UNAVAILABLE": "No se pudo conectar con el servicio. Inténtalo más tarde."
   }
 }
