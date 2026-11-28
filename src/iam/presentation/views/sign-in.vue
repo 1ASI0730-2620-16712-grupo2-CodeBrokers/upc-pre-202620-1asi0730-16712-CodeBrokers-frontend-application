@@ -54,6 +54,9 @@ async function submit() {
     <form class="panel sign-in-form" novalidate @submit.prevent="submit">
       <h1>{{ t("signIn") }}</h1>
       <p class="muted">{{ t("signInCopy") }}</p>
+      <p v-if="route.query.expired && !error" class="sign-in-notice" role="status">
+        {{ t("sessionExpired") }}
+      </p>
       <label class="sign-in-field">
         <span>{{ t("email") }}</span>
         <input v-model="email" type="email" autocomplete="username" required />

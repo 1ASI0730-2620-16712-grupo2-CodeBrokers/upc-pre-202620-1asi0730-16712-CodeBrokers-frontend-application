@@ -17,3 +17,24 @@ http.interceptors.request.use((config) => {
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
 });
+
+let unauthorizedHandler = null;
+
+/**
+ * Registers what to do when the backend answers 401 to a request made with a session.
+ *
+ * @param {Function} handler - Called once per rejected request.
+ */
+export function onUnauthorized(handler) {
+    unauthorizedHandler = handler;
+}
+
+http.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        // A failed sign-in also answers 401; that case is handled by the sign-in view.
+        const isSignIn = error.config?.url?.includes("/authentication/sign-in");
+        if (error.response?.status === 401 && !isSignIn) unauthorizedHandler?.();
+        return Promise.reject(error);
+    },
+);

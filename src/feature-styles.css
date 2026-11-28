@@ -695,3 +695,24 @@ select {
   gap: 6px;
   font-weight: 600;
 }
+.sign-in-notice {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #eefbf5;
+  color: #09563f;
+}
+.session-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.session-email {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+@media (max-width: 720px) {
+  .session-email {
+    display: none;
+  }
+}

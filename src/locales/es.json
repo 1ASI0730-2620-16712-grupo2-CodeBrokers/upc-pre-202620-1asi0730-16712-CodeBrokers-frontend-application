@@ -186,5 +186,7 @@
     "ACCOUNT_DISABLED": "Esta cuenta no está habilitada para iniciar sesión.",
     "TOO_MANY_ATTEMPTS": "Demasiados intentos. Inténtalo de nuevo en un minuto.",
     "UNAVAILABLE": "No se pudo conectar con el servicio. Inténtalo más tarde."
-  }
+  },
+  "signOut": "Cerrar sesión",
+  "sessionExpired": "Tu sesión terminó. Inicia sesión de nuevo para continuar."
 }

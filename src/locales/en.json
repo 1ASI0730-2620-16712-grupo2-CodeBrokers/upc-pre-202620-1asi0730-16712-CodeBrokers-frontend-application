@@ -186,5 +186,7 @@
     "ACCOUNT_DISABLED": "This account is not enabled to sign in.",
     "TOO_MANY_ATTEMPTS": "Too many attempts. Try again in a minute.",
     "UNAVAILABLE": "The service could not be reached. Try again later."
-  }
+  },
+  "signOut": "Sign out",
+  "sessionExpired": "Your session has ended. Sign in again to continue."
 }
