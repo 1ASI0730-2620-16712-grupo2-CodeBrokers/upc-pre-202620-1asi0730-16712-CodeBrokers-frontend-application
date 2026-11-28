@@ -177,7 +177,7 @@
     "UNAVAILABLE": "The change could not be saved. Check your connection and try again."
   },
   "signIn": "Sign in",
-  "signInCopy": "Use the account registered in VitaLink.",
+  "signInCopy": "Enter your credentials to access the platform.",
   "password": "Password",
   "signingIn": "Signing in…",
   "requiredFields": "Enter your email and password.",
@@ -188,5 +188,12 @@
     "UNAVAILABLE": "The service could not be reached. Try again later."
   },
   "signOut": "Sign out",
-  "sessionExpired": "Your session has ended. Sign in again to continue."
+  "sessionExpired": "Your session has ended. Sign in again to continue.",
+  "signInBrandCopy": "A shared space for health professionals and the family care network. Review records and alerts for your older family members.",
+  "emailAddress": "Email address",
+  "signInSubmit": "Sign in to VitaLink",
+  "noAccount": "Do not have an active account?",
+  "createAccount": "Create an account",
+  "showPassword": "Show password",
+  "hidePassword": "Hide password"
 }

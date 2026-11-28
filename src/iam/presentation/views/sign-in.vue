@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import Button from "primevue/button";
 import Brand from "../../../shared/presentation/components/brand.vue";
 import LanguagePicker from "../../../shared/presentation/components/language-picker.vue";
 import { useSession } from "../../application/session.store.js";
@@ -13,6 +12,7 @@ const { t } = useI18n(),
   session = useSession(),
   email = ref(""),
   password = ref(""),
+  showPassword = ref(false),
   busy = ref(false),
   error = ref("");
 
@@ -45,42 +45,88 @@ async function submit() {
 </script>
 <template>
   <header class="topbar">
-    <RouterLink to="/"><Brand /></RouterLink>
+    <Brand />
     <div class="header-actions">
       <LanguagePicker />
     </div>
   </header>
   <main id="main" tabindex="-1" class="sign-in">
-    <form class="panel sign-in-form" novalidate @submit.prevent="submit">
-      <h1>{{ t("signIn") }}</h1>
-      <p class="muted">{{ t("signInCopy") }}</p>
-      <p v-if="route.query.expired && !error" class="sign-in-notice" role="status">
-        {{ t("sessionExpired") }}
-      </p>
-      <label class="sign-in-field">
-        <span>{{ t("email") }}</span>
-        <input v-model="email" type="email" autocomplete="username" required />
-      </label>
-      <label class="sign-in-field">
-        <span>{{ t("password") }}</span>
-        <input
-          v-model="password"
-          type="password"
-          autocomplete="current-password"
-          required
-        />
-      </label>
-      <p v-if="error" class="field-error" role="alert">{{ t(error) }}</p>
-      <Button
-        type="submit"
-        :label="busy ? t('signingIn') : t('signIn')"
-        icon="pi pi-sign-in"
-        :loading="busy"
-      />
-    </form>
+    <section class="sign-in-card">
+      <aside class="sign-in-aside">
+        <div class="sign-in-aside-brand">
+          <span class="sign-in-aside-logo" aria-hidden="true"
+            ><i class="pi pi-heart-fill"
+          /></span>
+          <div>
+            <p class="sign-in-aside-name">VitaLink</p>
+            <p class="sign-in-aside-tagline">{{ t("connected") }}</p>
+          </div>
+        </div>
+        <p class="sign-in-aside-copy">{{ t("signInBrandCopy") }}</p>
+      </aside>
+
+      <form class="sign-in-form" novalidate @submit.prevent="submit">
+        <h1>{{ t("signIn") }}</h1>
+        <p class="muted">{{ t("signInCopy") }}</p>
+        <p
+          v-if="route.query.expired && !error"
+          class="sign-in-notice"
+          role="status"
+        >
+          {{ t("sessionExpired") }}
+        </p>
+
+        <label class="sign-in-field">
+          <span>{{ t("emailAddress") }}</span>
+          <input
+            v-model="email"
+            type="email"
+            autocomplete="username"
+            required
+          />
+        </label>
+        <label class="sign-in-field">
+          <span>{{ t("password") }}</span>
+          <span class="sign-in-password">
+            <input
+              v-model="password"
+              :type="showPassword ? 'text' : 'password'"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              type="button"
+              class="sign-in-eye"
+              :aria-label="showPassword ? t('hidePassword') : t('showPassword')"
+              :aria-pressed="showPassword"
+              @click="showPassword = !showPassword"
+            >
+              <i
+                :class="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"
+                aria-hidden="true"
+              />
+            </button>
+          </span>
+        </label>
+
+        <p v-if="error" class="field-error" role="alert">{{ t(error) }}</p>
+
+        <button type="submit" class="sign-in-submit" :disabled="busy">
+          <span>{{ busy ? t("signingIn") : t("signInSubmit") }}</span>
+          <i
+            :class="busy ? 'pi pi-spin pi-spinner' : 'pi pi-arrow-right'"
+            aria-hidden="true"
+          />
+        </button>
+
+        <div class="sign-in-register">
+          <p>{{ t("noAccount") }}</p>
+          <RouterLink to="/register/family-caregiver" class="text-link"
+            >{{ t("createAccount") }}
+            <i class="pi pi-arrow-up-right" aria-hidden="true"
+          /></RouterLink>
+        </div>
+      </form>
+    </section>
   </main>
-  <footer class="footer-main">
-    <span>{{ t("footer") }}</span
-    ><RouterLink to="/terms" class="text-link">{{ t("terms") }}</RouterLink>
-  </footer>
 </template>
