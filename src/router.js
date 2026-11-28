@@ -10,10 +10,10 @@ export const router = createRouter({
     history: createWebHashHistory(),
     routes: [
         {
+            // The app starts at the sign-in view; a signed-in user is sent to their workspace.
             path: "/",
             name: "entry",
-            component: () => import("./shared/presentation/views/entry.vue"),
-            meta: { title: "welcome" },
+            redirect: { name: "sign-in" },
         },
         {
             path: "/terms",
