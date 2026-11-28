@@ -1,6 +1,7 @@
 <script setup>
 import Brand from "./brand.vue";
 import LanguagePicker from "./language-picker.vue";
+import SessionMenu from "../../../iam/presentation/components/session-menu.vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { ref, watch } from "vue";
@@ -17,10 +18,7 @@ watch(
   <header class="topbar">
     <RouterLink to="/"><Brand /></RouterLink>
     <div class="header-actions">
-      <LanguagePicker /><RouterLink to="/" class="text-link">{{
-        t("switchRole")
-      }}</RouterLink
-    ><Button
+      <LanguagePicker /><SessionMenu /><Button
         class="mobile-menu"
         icon="pi pi-bars"
         :aria-label="t('toggleMenu')"

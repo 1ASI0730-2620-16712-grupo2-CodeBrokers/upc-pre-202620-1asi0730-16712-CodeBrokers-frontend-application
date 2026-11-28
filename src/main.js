@@ -7,6 +7,8 @@ import "primeicons/primeicons.css";
 import App from "./app.vue";
 import { router } from "./router.js";
 import { i18n } from "./i18n.js";
+import { handleExpiredSessions } from "./iam/application/session-expiry.js";
+import { protectRoutes } from "./iam/application/route-guard.js";
 import "./style.css";
 import "./feature-styles.css";
 
@@ -41,4 +43,6 @@ const app = createApp(App)
         ripple: true,
     })
     .use(router);
+handleExpiredSessions(router);
+protectRoutes(router);
 router.isReady().then(() => app.mount("#app"));
